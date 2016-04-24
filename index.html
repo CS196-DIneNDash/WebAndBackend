@@ -3,10 +3,9 @@
 <head>
 	<title>Dine In a Dash</title> 
 </head> 
-
 <body> 
-    <div id="fb-root"></div>
-    <script>
+	<div id="fb-root"></div>
+    	<script>
 		(function(d, s, id) {
 		  var js, fjs = d.getElementsByTagName(s)[0];
 		  if (d.getElementById(id)) return;
@@ -15,19 +14,16 @@
 		  fjs.parentNode.insertBefore(js, fjs);
 		}(document, 'script', 'facebook-jssdk'));
 	</script>
-    <div class="fb-login-button" align = "right" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
-
-	<div data-role="content">
-	
+    	<div class="fb-login-button" align = "right" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
 	<div align = "center" id="branding">
 		<h1>Dine In A Dash </h1>
 	</div>
 	<div class="choice_list"> 
-	<h1> Choose by </h1>
+	<h2> Choose by </h2>
 	
-	<ul data-role="listview" data-inset="true" >
-	<li><a href="choose_time.html" data-transition="slidedown"> <h3> Time </h3></a></li>
-	<li><a href="choose_restaurant.html"  data-transition="slidedown"> <h3> Restaurant </h3></a></li>
+	<ul style="list-style-type:none" >
+	<li><a href="choose_time.html"> <h4> Time </h4></a></li>
+	<li><a href="choose_restaurant.html"> <h4> Restaurant </h4></a></li>
 	</ul>	
 	
 	</div>
