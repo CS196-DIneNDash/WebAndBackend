@@ -34,10 +34,37 @@ def findEventNumber(location, time):
 			eventNum+=1
 
 
+def addMeetupMember(location, time, eventNum, newMember):
+	name = location + ' @ ' + time  + ', Group: ' + str(eventNum)
+	currentPpl = fb.get('/meetups/'+name+"/Current People", None)
+	maxPpl = fb.get('/meetups/'+name+"/Max People", None)
+	# print (newMember)
+	print (fb.get('/meetups/'+name+"/Max People", None))
+	print str(currentPpl)
+
+	if(currentPpl < maxPpl):
+		currentState = getMeetup(location, time, eventNum)
+		currentState['Attending']['User'+str(currentPpl+1)] = newMember
+		currentState['Current People'] = currentPpl+1
+		fb.put('/meetups/', name, currentState)
+
+def getPlannedMeetup(location, time, eventNum, user):
+	print fb.get('/plannedMeetups/', user)
+	return fb.get('/plannedMeetups/', user)
+
+def addToPlannedMeetups(location, time, eventNum, user):
+	check = fb.get('/plannedMeetups/'+user,None)
+	print(check)
+	name = location + " @ " + time
+	if check is None:
+		return fb.put('/plannedMeetups/', user, {name:{'Location': location, 'Time': time,  'Event Number': eventNum}})
+	else:
+		check[name] = {'Location': location, 'Time': time,  'Event Number': eventNum}
+		return fb.put('/plannedMeetups/', user,check)
+
+
+
 auth = firebase.FirebaseAuthentication('Nk9xiLFTq805hS9Sgid9RuCKAsIE8hJqhHYVP2uS', 'cs196BGE@gmail.com', True, True)
 fb = firebase.FirebaseApplication("https://brilliant-heat-3299.firebaseio.com/", auth)
 
-
-print(addMeetup("Arby's", "4:00", 7))
-
-# print(addMeetup("Arby's" , '5:00', 5))
+addMeetupMember("Arby's", '4:00', 2, 'Sania')
