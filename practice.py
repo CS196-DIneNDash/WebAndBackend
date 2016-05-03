@@ -1,7 +1,9 @@
 from firebase import firebase
 from flask import Flask, request
+from flask.ext.cors import CORS
 app = Flask(__name__)
-
+CORS(app)
+cors = CORS(app, resources={"/*": {"origins": "*"}})
 
 
 #adds meetup to database
@@ -144,6 +146,7 @@ def addMeetupMember():
 @app.route("/getPlannedMeetup/", methods = ['GET'])
 def getPlannedMeetup():
 
+	print ('testing plezzzzzzzz')
 	print str(request)
 	user = request.args.get('user')
 	user = user.replace("%22", "")
@@ -151,7 +154,11 @@ def getPlannedMeetup():
 	user = str(user)
 	print user
 
-	return fb.get('/plannedMeetups/', user)
+	info = fb.get('/plannedMeetups/', user)
+	# info = str(info.keys()[0])
+	print info.keys()[0]
+
+	return str(info.keys()[0])
 
 # def addToPlannedMeetups(location, time, eventNum, user):
 @app.route("/addToPlannedMeetups/", methods = ['GET'])
@@ -184,18 +191,17 @@ def addToPlannedMeetups():
 
 	check = fb.get('/plannedMeetups/'+user,None)
 	print(check)
-	print "oh yes"
 	name = location + " @ " + time
 	if check is None:
 		fb.put('/plannedMeetups/', user, {name:{'Location': location, 'Time': time,  'Event Number': eventNum}})
-		return check
+		return 'it ran fine'
 
 	else:
 		check[name] = {'Location': location, 'Time': time,  'Event Number': eventNum}
 
 		fb.put('/plannedMeetups/', user,check)
 		print('return flaws')
-		return check
+		return 'it ran fine'
 	print "over this"
 	# return "this works"
 
@@ -204,7 +210,6 @@ if __name__ == "__main__":
     #app.run(host='0.0.0.0', port=port, debug = True)
     auth = firebase.FirebaseAuthentication('Nk9xiLFTq805hS9Sgid9RuCKAsIE8hJqhHYVP2uS', 'cs196BGE@gmail.com', True, True)
     fb = firebase.FirebaseApplication("https://brilliant-heat-3299.firebaseio.com/", auth)
-    #print(addMeetupMember("Arby's", "4:00", 2, 'Harshit'))
     app.run(debug = True)
     
 

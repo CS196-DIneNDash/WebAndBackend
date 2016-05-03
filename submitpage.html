@@ -45,21 +45,16 @@
     </fieldset>
     </div>
     <script>
-        function show(){
-            msg = window.localStorage.getItem("check");
-            $('#text').val(msg);
-        }
-    </script>
-    <script>
         function getmeetups() {
         var request = $.ajax({
-        url: 'http://127.0.0.1:5000/getPlannedMeetups/',
+        url: 'http://127.0.0.1:5000/getPlannedMeetup/',
         type: 'GET',
-        data: {user: "Yutong"},
+        data: {user: JSON.stringify("Yutong")},
         });
         
         request.done(function( msg ) {
-          $('#meetups').val(msg);
+            console.log(msg);
+          $('#text').val(msg);
         });
         }
     </script>
